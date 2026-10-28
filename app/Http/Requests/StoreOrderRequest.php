@@ -12,17 +12,24 @@ class StoreOrderRequest extends FormRequest
         return true;
     }
 
-    public function rules(): array
-    {
-        return [
-            'customer.name' => ['required', 'string', 'max:255'],
-            'customer.email' => ['required', 'email', 'max:255'],
-            'items' => ['required', 'array', 'min:1'],
-            'items.*' => ['required', 'array'],
-            'items.*.product_id' => [
-                'required', 'integer', 'distinct', 'exists:products,id',
-            ],
-            'items.*.quantity' => ['required', 'integer', 'min:1'],
-        ];
-    }
+   public function rules(): array
+{
+    return [
+        'customer.name' => ['required', 'string', 'max:255'],
+        'customer.email' => ['required', 'email', 'max:255'],
+
+        'items' => ['required', 'array', 'min:1'],
+        'items.*.product_id' => [
+            'required',
+            'integer',
+            'distinct',
+            'exists:products,id',
+        ],
+        'items.*.quantity' => [
+            'required',
+            'integer',
+            'min:1',
+        ],
+    ];
+}
 }
